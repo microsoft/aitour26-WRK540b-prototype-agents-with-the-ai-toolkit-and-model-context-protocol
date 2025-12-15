@@ -145,7 +145,7 @@ keyring==25.7.0
     # via py-key-value-aio
 markdown-it-py==4.0.0
     # via rich
-mcp==1.22.0
+mcp==1.23.0
     # via
     #   -r requirements.in
     #   fastmcp
