@@ -4,7 +4,7 @@ In this section, you will explore the AI Toolkit Model Catalog to discover, filt
 
 ## Step 1: Apply Filters to Narrow Your Selection
 
-1. In your codespace, locate the **AI Toolkit** extension icon in the left sidebar
+1. Locate the **AI Toolkit** extension icon in the left sidebar
 2. Click on the AI Toolkit icon to open the extension panel
 3. Click on **Model Catalog** to browse available models
 
@@ -13,12 +13,6 @@ In this section, you will explore the AI Toolkit Model Catalog to discover, filt
 On the top of the page you'll find the most popular models; scroll down to see the full list of available models.
 
 Since the list is quite consistent, you can use the filtering options to narrow down the selection based on your requirements.
-
-Before proceeding, close the GitHub Copilot Chat panel that has been loaded on the right side of your codespace, by clicking on the 'X' icon in the top right corner of the panel.
-
-![Expand Model Catalog view](../../img/expand_model_catalog_view.png)
-
-By doing so, you'll see the filtering options - previously regrouped under **All filters** - displayed individually at the top of the Model Catalog panel.
 
 ![Filter Options](../../img/filter_options.png)
 
@@ -70,14 +64,14 @@ For this exercise:
 
 ![Try in playground](../../img/try_in_playground.png)
 
-2. You'll be prompted to login to your GitHub account to access the free-tier models. Click **Allow** and complete the authentication process, by using the same GitHub credentials you used in the [previous lab section](./01_Get_Started.md).
+2. You'll be prompted to login to your GitHub account to access the free-tier models. Click **Allow** and complete the authentication process, by using the same GitHub credentials you used in the previous lab section.
 
 > [!TIP]
 > Now that you are logged in, you should be able to see the models you added into your collection in the 'My resources' tab, under 'GitHub', in the AI Toolkit extension panel.
 >
 > ![Model collection](../../img/model_collection.png)
 >
-> If you don't see them, it's likely because the view hasn't refreshed yet. Proceed to the next step, and the models should appear in the Playground.
+> If you don't see them, click on the refresh icon to update the view.
 
 3. In the **Model** field, you'll see the name of the model you just selected, for example **Mistral Small 3.1 (via GitHub)**. 
 
@@ -100,6 +94,7 @@ For this exercise:
 Let's start interacting with the models with a simple prompt:
 
 1. Enter this prompt in the text field (where you see the placeholder "Type a prompt"):
+
 ```
 I’m a store manager at a DIY retailer. What are the most important metrics to review in a weekly sales summary, and why?
 ```
@@ -136,14 +131,14 @@ Describe what's in this image and what kind of electrical component it appears t
 
 ![Image Attachment](../../img/image_attachment.png)
 
-3. Select an image file to upload. You'll be prompted with a text field with a default file path in your workspace directory. Replace it with the following:
+3. You'll be prompted with a browsing window to select the image file attachment to upload. Double check you are at the following location:
 ```
-/workspace/src/instructions/circuit_breaker.png
+C:\Users\LabUser\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\src\instructions
 ```
+Then select the file named **circuit_breaker.png** and click **Open**.
 ![Image File Path](../../img/image_file_path.png)
 
 4. Send the multimodal prompt on both models simultaneously.
-
 
 ## Step 5: Analyze and Compare Results
 
@@ -159,6 +154,28 @@ Review the outputs from both models, using several factors to guide your evaluat
 > Number of output tokens is visible in the response footer, along with characters length. LLMs are non-deterministic, so you might see slight variations in token usage across multiple runs with the same input prompt.
 >
 > ![Token usage](../../img/token_usage.png)
+
+### Leverage GitHub Copilot for Comparative Analysis
+
+To assist with the comparative analysis, you can leverage GitHub Copilot to generate a comparison summary.
+
+To access GitHub Copilot Chat, select the **Toggle Chat** icon at the top of the Visual Studio Code window.
+
+![Toggle chat button.](../../img/toggle-chat.png)
+
+> [!NOTE]
+> If asked to log in at your first interaction with Copilot, select **Sign-in** -> **Continue with GitHub**. Then click on **Continue** to proceed with the GitHub account you used to access the GitHub hosted models, when redirected to the GitHub sign-in page.
+
+Try the following prompt in the Copilot chat window:
+
+```
+I am exploring models for an AI agent that should support Zava - a DIY retailer with 20 stores across the United States and an online channel - on store operations and head office sales analysis. I am evaluating Mistral Small 3.1 and OpenAI GPT5-mini. Which one would you recommend for this scenario, and why? Explain the trade-offs between models (e.g., reasoning ability, cost, latency, context length) so that I can make an informed choice.
+```
+
+To answer this, Copilot calls the *Get AI Model Guidance* tool of the AI Toolkit, which provides model recommendations based on your use case. In the response, you should see an expandable section with the details of the tool call, followed by the comparative analysis.
+
+> [!NOTE]
+> If GitHub Copilot doesn't invoke the AI Toolkit tools when generating its response, you can enter `#aitk` in the chat window to explicitly select which tool(s) you'd like GitHub Copilot to use prior to submitting your prompt.
 
 ## Step 6: Import selected model from Microsoft Foundry
 

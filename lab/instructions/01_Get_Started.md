@@ -10,75 +10,55 @@ As a first step, login into the lab Virtual Machine using the credentials you ca
 ![VM login credentials](../../img/vm_login_credentials.png)
 
 > [!TIP]
->  First time using **Skillable?** The green "T" (e.g., +++Admin+++) indicates values that are automatically input for you at the current cursor location in VM, with one click. This reduces your effort and minimizes input errors.
+> First time using **Skillable?** The "T" icon (e.g., +++Admin+++) indicates values that are automatically input for you at the current cursor location in VM, with one click. This reduces your effort and minimizes input errors.
 > Also, you can always click on the images to enlarge them, if needed.
 
+## Open the Workshop Environment in Visual Studio Code
 
-<!-- ## Open workshop in a GitHub Codespace
+Follow these steps to open the workshop environment in Visual Studio Code.
+Once logged in the VM, open the terminal by clicking on the terminal icon in the taskbar at the bottom of the screen.
 
-In this workshop, we will be using **GitHub Codespaces** to launch a cloud-hosted development environment with all the necessary tools and dependencies pre-installed. This will allow you to focus on learning and prototyping without worrying about local setup.
+![Open terminal](../../img/open_terminal.png)
 
-To launch a codespace you need a **GitHub account**. Follow the instructions below to sign-in with a given GitHub Enterprise (GHE) account and create a GitHub Codespace for this lab.
+Copy and paste the following command block to the terminal and press **Enter**. The following command block updates the workshop repository, activates the Python virtual environment, and opens the project in VS Code.
 
-1. Open the edge browser from the taskbar. You'll get a browser tab with the GHE sign-in page already opened for you.
+```powershell
+; cd $HOME\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\ `
+; git pull `
+; .\.venv\Scripts\activate `
+; code .
+```
+
+> [!WARNING]
+> You'll get a warning about pasting multiple lines in the terminal. Click on **Allow** to proceed.
+
+## Login to GitHub
+
+For this workshop, you'll be using a GitHub Enterprise (GHE) account to access GitHub-hosted models in the AI Toolkit Model Catalog and GitHub Copilot features in Visual Studio Code.
+
+Follow the instructions below to sign-in with a given GitHub Enterprise (GHE) account and create a GitHub Codespace for this lab.
+
+1. Open the edge browser from the taskbar. You'll get a browser tab with the [GHE sign-in page](https://github.com/enterprises/skillable-events) already opened for you.
 
 2. Sign-in with the following credentials:
    -  Username: +++@lab.CloudPortalCredential(User1).Username+++
    -  TAP: +++@lab.CloudPortalCredential(User1).TAP+++
 
-3. Once you are signed in, you'll be redirected to the [GitHub repo](https://github.com/skillable-events/ignite25-LAB512-prototyping-multimodal-agents-with-azure-ai-foundry-and-the-ai-toolkit) hosting the lab code and resources.
+Once you get notified that you are successfully logged in, you can hide the browser tab and move back to your VS Code instance.
 
-4. Next, click on the green **Code** button and select **Create codespace on main** from the **Codespaces** tab.
+## Authenticate to Azure
 
-    ![Create Codespace](../../img/create_codespace.png)
-
-> [!WARNING]
-> The codespace creation process might take a few minutes, as all the necessary dependencies and tools are being set up in the cloud environment.
-
-5. Once the codespace is created, you'll see a Visual Studio Code environment loaded in your browser.
-![Codespace layout](../../img/codespace_layout.png)
-
-6. You might choose to continue working in the browser or click on the **Open in VS Code** button to open it in the desktop application (recommended option).
-
-    ![Open in VS Code](../../img/open_in_vscode.png)
-
-7. If you choose to open it in the desktop application, you'll be prompted to confirm opening the VS Code Desktop app. Click **Open** to proceed.
-
-> [!NOTE]
-> You'll also get a popup *"All done. You can close this tab now."* in the browser, that you can just ignore.
-
-![Confirm opening VS Code App](../../img/confirm_opening_vscode.png)
-
-8. Once VS Code Desktop is opened, you'll be asked to allow access to the codespace. Click **Open** to proceed.
-
-![Open Codespaces in VS Code Desktop](../../img/open_codespaces_vscode.png)
-
-9. Next, you'll be asked to sign in to GitHub from VS Code. By clicking **Allow**, a browser window will open to complete the sign-in process. Click **Continue** to proceed with the GitHub Enterprise account you used to create the Codespace. And then click on **Authorize Visual Studio Code** to complete the sign-in process. Also, when asked to allow VS Code access to public and private networks, click **Allow**.
-
-10. Once the sign-in process is completed, the site will try to redirect you back to VS Code. Click on the **Open** button to proceed.
-![Redirect back to VS Code](../../img/redirect_back_to_vscode.png)
-
-11. Back in VS Code, you are now set to start working in the codespace environment. You should see a layout pretty similar to what you had in the browser. -->
-
-## Login to Azure
-
-In the GitHub Codespace, you should be able to see two Visual Studio Code extensions already installed: 
+In your Visual Studio Code instance, you should be able to see two extensions already installed: 
 - The **AI Toolkit**: this is the extension we will be using to interact with various AI models and services in this lab.
-- The **Azure AI Foundry** extension: it's installed as a bundle of the AI Toolkit and provides access to Microsoft Foundry hosted models. 
+- The **Microsoft Foundry** extension: it's installed as a bundle of the AI Toolkit and provides access to Microsoft Foundry hosted models. 
 If they are correctly installed, you should see their icons in the left sidebar of VS Code, as per screenshot below.
 
 ![Installed extensions](../../img/installed_extensions.png)
 
 > [!TIP]
-> If you don't see the icons, click on the ellipsis (...) at the bottom of the sidebar to see the full list of installed extensions. If you still don't see them, and you are still in the browser-based experience, try refreshing the page or re-opening the codespace in VS Code Desktop app.
+> If you don't see the icons, click on the ellipsis (...) at the bottom of the sidebar to see the full list of installed extensions. 
 
-> [!WARNING]
-> The VS code extensions have been pinned to specific versions within the GitHub Codespaces environment to ensure consistency with the lab manual instructions and avoid unexpected issues. Please refrain from updating these extensions during the lab.
-
-> [!WARNING]
-> The VS code extensions have been pinned to specific versions within the GitHub Codespaces environment to ensure consistency with the lab manual instructions and avoid unexpected issues. Please refrain from updating these extensions during the lab.
-
-Now click on the Azure AI Foundry extension icon, and then click on **Set Default Project** -> **Sign in to Azure**.
+Now click on the Microsoft Foundry extension icon, and then click on **Set Default Project** -> **Sign in to Azure**.
 
 ![Set Default Project](../../img/set_default_project.png)
 
@@ -86,14 +66,14 @@ You'll be prompted with a popup to confirm with the Azure login. Click **Allow**
 
 ![Azure Login Popup](../../img/azure_login_popup.png)
 
-Next, you'll be redirected to a browser window to complete the login process. Enter the following credentials:
+Next, you'll be redirected to a window to complete the login process. Enter the following credentials:
 -  Email: +++@lab.CloudPortalCredential(User1).Username+++
 -  TAP: +++@lab.CloudPortalCredential(User1).TAP+++
 
 > [!NOTE]
 > You'll be asked to confirm if you want to allow the automatic sign-in to all desktop apps and websites on the device. Click **Yes, all apps** to proceed. Then click **Done** to complete the login process and return to VS Code.
 
-Back in your codespace or your VS Code instance, you'll be asked to select the Foundry project to use. Select the only available option, which is the project pre-deployed for this workshop.
+Back in your VS Code instance, you'll be asked to select the Foundry project to use. Select the only available option, which is the project pre-deployed for this workshop.
 
 ![Select Project](../../img/select_project.png)
 

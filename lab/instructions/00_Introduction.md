@@ -41,7 +41,7 @@ They also need to handle occasional multimodal tasks, like identifying an item f
 
 You'll be developing **Cora**, an internal-facing assistant that can:
 
-1. **Understand multimodal inputs**: Process text and images from employees (e.g., photos of a circuit breaker or SKU label)
+1. **Understand multimodal inputs**: Process text and images from employees (e.g., photos of a product or SKU label)
 
 2. **Search the product catalog**: Find relevant products based on natural language queries (and, when needed, an image-based description)
 
