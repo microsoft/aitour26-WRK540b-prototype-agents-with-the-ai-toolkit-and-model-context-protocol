@@ -37,13 +37,15 @@ class Config:
         """Initialize configuration with environment variables."""
 
         ABS_DB_PATH = "sqlite+aiosqlite:////workspace/data/retail.db"
-        REL_DB_PATH = "sqlite+aiosqlite:///../data/retail.db"
-
-        # Use absolute path if running in container (/workspace exists), else relative path
+        
+        # Use absolute path if running in container (/workspace exists), else compute absolute path
         if pathlib.Path("/workspace").exists():
             DEFAULT_SQLITE_URL = ABS_DB_PATH
         else:
-            DEFAULT_SQLITE_URL = REL_DB_PATH
+            # Compute absolute path to data/retail.db from the shared module location
+            shared_dir = pathlib.Path(__file__).parent.parent.parent.parent
+            db_path = (shared_dir / "data" / "retail.db").resolve()
+            DEFAULT_SQLITE_URL = f"sqlite+aiosqlite:///{db_path}"
 
         # SQLite database URL
         self._sqlite_database_url: str = self._clean_env_value(os.getenv("SQLITE_DATABASE_URL", DEFAULT_SQLITE_URL))

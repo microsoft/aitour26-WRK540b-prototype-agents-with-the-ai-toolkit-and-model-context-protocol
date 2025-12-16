@@ -34,13 +34,17 @@ from zava_shop_shared.models.sqlite import (
     Supplier,
 )
 
-# Try to import Azure OpenAI for real embeddings, fall back to fake embeddings
+# Import Azure OpenAI for embeddings
+# Support both running as module (-m mcp_servers.sales_analysis) and directly (python sales_analysis.py)
 try:
     from mcp_servers.sales_analysis_text_embeddings import SemanticSearchTextEmbedding
-
     USE_REAL_EMBEDDINGS = True
 except ImportError:
-    USE_REAL_EMBEDDINGS = False
+    try:
+        from sales_analysis_text_embeddings import SemanticSearchTextEmbedding
+        USE_REAL_EMBEDDINGS = True
+    except ImportError:
+        USE_REAL_EMBEDDINGS = False
 
 config = Config()
 
@@ -62,46 +66,6 @@ db_provider = FinanceSQLiteProvider()
 
 # Initialize semantic search provider (real or fake)
 semantic_search_provider = SemanticSearchTextEmbedding() if USE_REAL_EMBEDDINGS else None
-
-
-async def get_fake_query_embedding(query: str) -> list[float]:
-    """
-    Generate a fake embedding for search query for testing/demo purposes.
-    Uses a random real embedding from the database to ensure we get actual matches.
-
-    In production with Azure OpenAI configured, this would be replaced with real embeddings.
-    """
-    try:
-        async with db_provider.get_session() as session:
-            # Get a random product embedding from the database
-            # Use ORDER BY RANDOM() LIMIT 1 for SQLite
-            stmt = select(ProductDescriptionEmbedding.description_embedding).order_by(func.random()).limit(1)
-            result = await session.execute(stmt)
-            row = result.first()
-
-            if row and row.description_embedding:
-                # Parse the JSON embedding
-                embedding = json.loads(row.description_embedding)
-                logger.info(f"Using random database embedding for fake search (query: '{query}')")
-                return embedding
-    except Exception as e:
-        logger.warning(f"Failed to get random embedding from database: {e}")
-
-    # Fallback to keyword-based fake embedding if database access fails
-    keywords = query.lower().split()
-    embedding = [0.0] * 1536
-    for _i, word in enumerate(keywords):
-        hash_val = hash(word)
-        for j in range(100):
-            idx = (hash_val + j) % 1536
-            embedding[idx] += 1.0 / len(keywords)
-
-    magnitude = math.sqrt(sum(x * x for x in embedding))
-    if magnitude > 0:
-        embedding = [x / magnitude for x in embedding]
-
-    logger.info(f"Using keyword-based fake embedding (query: '{query}')")
-    return embedding
 
 
 @asynccontextmanager
@@ -144,18 +108,16 @@ async def _semantic_search_products_impl(
     try:
         logger.info(f"Searching products with query: '{query_description}', limit: {limit}")
 
-        # Generate embedding for the query
-        if USE_REAL_EMBEDDINGS and semantic_search_provider and semantic_search_provider.is_available():
-            # Use Azure OpenAI for real embeddings
-            logger.info("Using Azure OpenAI for embeddings")
-            query_embedding = semantic_search_provider.generate_query_embedding(query_description)
-            if not query_embedding:
-                logger.error("Failed to generate embedding from Azure OpenAI")
-                return []
-        else:
-            # Use fake embeddings for testing/demo
-            logger.info("Using fake embeddings (Azure OpenAI not configured)")
-            query_embedding = await get_fake_query_embedding(query_description)
+        # Generate embedding for the query using Azure OpenAI
+        if not (USE_REAL_EMBEDDINGS and semantic_search_provider and semantic_search_provider.is_available()):
+            logger.error("Azure OpenAI not configured. Semantic search requires Azure OpenAI embeddings.")
+            return []
+
+        logger.info("Using Azure OpenAI for embeddings")
+        query_embedding = semantic_search_provider.generate_query_embedding(query_description)
+        if not query_embedding:
+            logger.error("Failed to generate embedding from Azure OpenAI")
+            return []
 
         async with db_provider.get_session() as session:
             # Fetch all product embeddings with supplier info
@@ -385,9 +347,9 @@ async def get_current_utc_date() -> str:
 
 
 async def test_semantic_search():
-    """Test function to demonstrate semantic search with random database embeddings."""
+    """Test function to demonstrate semantic search."""
     print("\n" + "=" * 70)
-    print("FAKE SEMANTIC SEARCH TEST - Using Random Database Embedding")
+    print("SEMANTIC SEARCH TEST - Using Azure OpenAI Embeddings")
     print("=" * 70)
 
     queries = ["test query 1", "test query 2", "test query 3"]

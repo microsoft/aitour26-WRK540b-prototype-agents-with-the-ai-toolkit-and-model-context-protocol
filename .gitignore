@@ -343,6 +343,12 @@ paket-files/
 **/__pycache__/
 *.pyc
 
+# Python package build artifacts
+*.egg-info/
+*.egg
+dist/
+build/
+
 # Cake - Uncomment if you are using it
 #tools/**
 #!tools/packages.config

@@ -62,17 +62,21 @@ class SemanticSearchTextEmbedding:
     def _load_environment(self) -> None:
         """Load environment variables from .env files."""
         script_dir = Path(__file__).parent
-        # Try to load .env from parent directory first, then other locations
+        # Try to load .env from multiple locations
         env_paths = [
-            script_dir.parent / ".env"  # Parent folder
+            script_dir.parent / ".env",  # src/.env
+            script_dir.parent.parent / ".env",  # workspace root/.env
+            Path.cwd() / ".env",  # current working directory/.env
         ]
 
         for env_path in env_paths:
             if env_path.exists():
-                load_dotenv(env_path)
+                logger.info(f"Loading environment from: {env_path}")
+                load_dotenv(env_path, override=True)
                 break
         else:
             # Fallback to default behavior
+            logger.warning("No .env file found in expected locations")
             load_dotenv()
 
     def _setup_azure_openai_client(self) -> AzureOpenAI:
