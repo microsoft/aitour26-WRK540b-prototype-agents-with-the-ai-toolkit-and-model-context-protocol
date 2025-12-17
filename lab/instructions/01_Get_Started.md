@@ -25,6 +25,7 @@ Copy and paste the following command block to the terminal and press **Enter**. 
 ```powershell
 ; cd $HOME\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\ `
 ; git pull `
+; Remove-Item -Recurse -Force .git `
 ; .\.venv\Scripts\activate `
 ; code .
 ```
