@@ -16,7 +16,7 @@ Agent Builder's UI is organized into two sections. The left side of Agent Builde
 
 ## Step 2: Create the Agent
 
-Let's create Zava's Cora agent! In **Agent Builder** select **+ New Agent**. Within the **Agent name** field, enter **Cora**. For the agent's **Model**, select the **gpt-5-mini (via Azure AI Foundry)** model.
+Let's create Zava's Cora agent! In **Agent Builder** select **+ New Agent**. Within the **Agent name** field, enter **Cora**. For the agent's **Model**, select the **gpt-4o (via Microsoft Foundry)** model instance.
 
 ![Agent Basic Information](../../img/agent-basic-information.png)
 
@@ -104,7 +104,7 @@ You must analyze the user's intent to select the correct tool workflow:
 ```
 
 Note how we added explicit guidance for store operations tasks (sales analysis, inventory checks, and safe transfers).
-However, we didn't provide Cora with the access to the product catalog yet. Let's do it in the upcoming step.
+However, we didn't provide Cora with the access to sales and inventory data yet. We'll do that in the next steps.
 
 ## Step 4: Start the MCP server
 
@@ -118,9 +118,12 @@ To address that, we'll connect Cora to two MCP servers configured for this works
 - **Sales Analysis MCP server** (sales metrics + semantic product search)
 - **Inventory MCP server** (stock levels + safe transfers)
 
-To start the servers, within Visual Studio Code, **press <kbd>F5</kbd> to start the MCP Servers**
+To start the servers, within Visual Studio Code, **press <kbd>F5</kbd> to start the MCP Servers** and wait for both servers to initialize. You should see two new terminal windows open, one for each server.
+Double check that you get the message `Uvicorn is running on port XXXX` in both terminal windows, indicating that the servers are running.
 
-## Step 5: Add a Tool to the Agent
+![MCP Servers running](../../img/mcp_servers_running.png)
+
+## Step 5: Add the MCP Server Sales Tools to the Agent
 
 For this lab, we’ll give the agent a small, focused set of tools from both servers (enough to search products, check stock, run sales queries, and perform a transfer with confirmation).
 
@@ -130,72 +133,41 @@ Back in Agent Builder, select the **+** icon next to **Tools** to open the wizar
 
 Then select the **MCP Server** option. When prompted, select **Use Tools Added in Visual Studio Code**.
 
-1. unselect all tools by unchecking the box at the top of the wizard next to the search bar.
+1. Unselect all tools by unchecking the box at the top of the wizard next to the search bar.
+   ![Deselect all tools.](../../img/deselect-all-tools.png)
 1. In the list of tools available, type **sales** to filter the list of MCP Server tools.
 1. Select these four tools.
-
-
 - `mcp_zava-sales-an_semantic_search_products`
 - `mcp_zava-sales-an_execute_sales_query`
 - `mcp_zava-sales-an_get_database_schema`
 - `mcp_zava-sales-an_get_current_utc_date`
-
 1. Select **OK**.
+   ![Select Sales Tools](../../img/select-sales-tools.png)
 
+> ![NOTE]
+> Ensure the Sales Analysis MCP server is running before adding these tools. If the server is not running, the tools will not appear in the list.
 
-![Deselect all tools.](../../img/deselect-all-tools.png)
-
-## Step 6: Chat with the Agent
+## Step 6: Test Sales Queries with the Agent
 
 You're now ready to test whether the Cora agent executes tool calls for store operations. On the right-end chat pane of the **Agent Builder** tab, attach the circuit breaker image, available at the following path:
-
-If the agent wants to call a tool, a notification will appear in Visual Studio Code requesting to run one or more tools (for example, `semantic_search_products` and `get_stock_level_by_product_id`). Select **Yes** to execute each tool call. In a production app, you typically only require approval for sensitive actions.
-
-![Yes run tool.](../../img/yes-run-tool.png)
-
-Assuming the agent executes a tool call, a section appears in the agent output indicating which tool was invoked.
-
-![Tool call in the agent's output.](../../img/tool-call.png)
-
-
-Ask the following questions:
-
 ```
-/workspace/src/instructions/circuit_breaker.png
+C:\Users\LabUser\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\src\instructions
 ```
-
 Then submit the following textual prompt:
 
 ```
 I’m the store manager. Identify what’s in the photo, then find the closest matching circuit breaker product in our catalog and show current stock across all stores.
 ```
 
-Next, ask the following question:
+![Agent Builder Playground](../../img/agent-builder-playground.png)
 
-```text
-What were the sales by store for the last quarter
-```
+If the agent wants to call a tool, a notification will appear in Visual Studio Code requesting to run one or more tools (for example, `semantic_search_products`). Select **Yes** to execute each tool call. In a production app, you typically only require approval for sensitive actions.
 
-Next, ask the following question:
+![Yes run tool.](../../img/yes-run-tool.png)
 
-```
-What are our top 3 selling products last year
-```
+Assuming the agent executes a tool call, a section appears in the agent output indicating which tool was invoked.
 
-### Step 7: Add the Inventory MCP Server Tool to the Agent
-
-1. First, back in Agent Builder, select the **+** icon next to **Tools** to open the wizard for adding tools to the agent. 
-2. Type **invent** to filter the tools
-3. Select both tools:
-
-    - `mcp_zava-inventor_get_stock_level_by_product_id`
-    - `mcp_zava-inventor_transfer_stock`
-
-4. Select **OK**
-
-
-
-## Step 8: Chat with the Agent
+![Tool call in the agent's output.](../../img/tool-call.png)
 
 Due to the non-deterministic nature of language models, the agent's output will differ each time the prompt is submitted. Provided below is an example of the agent's response:
 
@@ -207,13 +179,43 @@ Due to the non-deterministic nature of language models, the agent's output will 
 
 If the agent didn’t use tools as expected, one technique is to update the **Instructions** to more explicitly describe which tools to use for which tasks.
 
+Next, ask the following questions:
+
+```text
+What were the sales by store for the last quarter
+```
+
+```
+What are our top 3 selling products last year
+```
+
+### Step 7: Add the Inventory MCP Server Tools to the Agent
+
+Now let's add the inventory tools to the agent, so it can check stock levels and perform safe transfers.
+
+1. First, back in Agent Builder, select the **+** icon next to **Tools** to open the wizard for adding tools to the agent. Then select **MCP Server** -> **Use Tools Added in Visual Studio Code**.
+1. Uncheck the box at the top of the wizard next to the search bar to unselect all tool
+1. Type **invent** to filter the tools
+1. Select both tools:
+
+    - `mcp_zava-inventor_get_stock_level_by_product_id`
+    - `mcp_zava-inventor_transfer_stock`
+
+4. Select **OK**
+   ![Select Inventory Tools](../../img/select-inventory-tools.png)
+
+> ![NOTE]
+> Ensure the Inventory MCP server is running before adding these tools. If the server is not running, the tools will not appear in the list.
+
+## Step 8: Test Inventory Checks and Transfers with the Agent
+
 To test an inventory move, try a transfer request like:
 
 ```
-Transfer 5 units of the recommended circuit breaker from a store with surplus stock to the online store.
+Transfer 5 units of the Single Pole Circuit Breaker 20A from a store with surplus stock to the online store.
 ```
 
-The agent should ask you to confirm the transfer before it runs the transfer tool. Confirm only if the source and destination stores look correct.
+The agent should ask you to confirm the transfer before it runs the transfer tool. Confirm only if the source and destination stores look correct. Once done, ask the agent to check stock levels again to verify the transfer was successful.
 
 If you'd like to continue testing tool calls with the Cora agent, try submitting the following prompts:
 

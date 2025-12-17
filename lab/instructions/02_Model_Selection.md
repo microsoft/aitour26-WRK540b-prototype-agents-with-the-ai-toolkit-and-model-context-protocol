@@ -41,8 +41,8 @@ After applying filters, you'll see a refined list of models.
 
 For this exercise:
 
-1. Locate the **OpenAI GPT-5-mini** and **Mistral Small 3.1** models in the filtered results.
-   - **OpenAI GPT-5-mini** is a full-featured multimodal model with comprehensive capabilities
+1. Locate the **OpenAI GPT-4o** and **Mistral Small 3.1** models in the filtered results.
+   - **OpenAI GPT-4o** is a full-featured multimodal model with comprehensive capabilities
    - **Mistral Small 3.1** is an optimized smaller model with faster response times and lower costs.
    
 > [!TIP]
@@ -81,7 +81,7 @@ For this exercise:
 > You might experience some delay in model loading, especially if it's your first time accessing the Playground. Please be patient while the model initializes.
 
 4. Next, click the **Compare** button to enable side-by-side comparison
-5. From the dropdown, select your second model (OpenAI GPT-5-mini if Mistral Small 3.1 is already selected)
+5. From the dropdown, select your second model (OpenAI GPT-4o if Mistral Small 3.1 is already selected)
 6. You now have two models ready for comparison testing
 
 ![Model Comparison](../../img/model_comparison.png)
@@ -131,7 +131,7 @@ Describe what's in this image and what kind of electrical component it appears t
 
 ![Image Attachment](../../img/image_attachment.png)
 
-3. You'll be prompted with a browsing window to select the image file attachment to upload. Double check you are at the following location:
+3. You'll be prompted with a browsing window to select the image file attachment to upload. Navigate to the following location:
 ```
 C:\Users\LabUser\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\src\instructions
 ```
@@ -166,20 +166,25 @@ To access GitHub Copilot Chat, select the **Toggle Chat** icon at the top of the
 > [!NOTE]
 > If asked to log in at your first interaction with Copilot, select **Sign-in** -> **Continue with GitHub**. Then click on **Continue** to proceed with the GitHub account you used to access the GitHub hosted models, when redirected to the GitHub sign-in page.
 
+Ensure you have *Claude Sonnet 4.5* model selected. Otherwise, expand the dropdown menu to select it.
+![Select claude Sonnet 4.5](../../img/select_claude_sonnet.png)
+
 Try the following prompt in the Copilot chat window:
 
 ```
-I am exploring models for an AI agent that should support Zava - a DIY retailer with 20 stores across the United States and an online channel - on store operations and head office sales analysis. I am evaluating Mistral Small 3.1 and OpenAI GPT5-mini. Which one would you recommend for this scenario, and why? Explain the trade-offs between models (e.g., reasoning ability, cost, latency, context length) so that I can make an informed choice.
+I am exploring models for an AI agent that should support Zava - a DIY retailer with 20 stores across the United States and an online channel - on store operations and head office sales analysis. I am evaluating Mistral Small 3.1 and OpenAI GPT-4o. Which one would you recommend for this scenario, and why? Explain the trade-offs between models (e.g., reasoning ability, cost, latency, context length) so that I can make an informed choice.
 ```
 
 To answer this, Copilot calls the *Get AI Model Guidance* tool of the AI Toolkit, which provides model recommendations based on your use case. In the response, you should see an expandable section with the details of the tool call, followed by the comparative analysis.
+
+![Get AI model guidance](../../img/get_ai_model_guidance.png)
 
 > [!NOTE]
 > If GitHub Copilot doesn't invoke the AI Toolkit tools when generating its response, you can enter `#aitk` in the chat window to explicitly select which tool(s) you'd like GitHub Copilot to use prior to submitting your prompt.
 
 ## Step 6: Import selected model from Microsoft Foundry
 
-Once we are done with the comparison, we are going to select one of the two models for further prototyping in the next lab sections. For the sake of this exercise, let's go with **GPT-5-mini**. 
+Once we are done with the comparison, we are going to select one of the two models for further prototyping in the next lab sections. For the sake of this exercise, let's go with **GPT-4o**. 
 
 > [!TIP]
 > To come back to the standard Playground (with a single pane and a single model),you can click on **Select this model** on the right side of the model name.
@@ -188,7 +193,7 @@ Once we are done with the comparison, we are going to select one of the two mode
 
 Now, since in the next section we are going to augment the model with additional context data relative to Zava, our DIY retail company, we need to switch to a model hosted in Microsoft Foundry, which provides enterprise-grade security and compliance features.
 
-Go back to **Model Playground** and expand the **Model** dropdown and select the gpt-5-mini instance hosted in Microsoft Foundry, that has been pre-deployed for this workshop, in the project you logged into in the [previous lab section](./01_Get_Started.md).
+Go back to **Model Playground** and expand the **Model** dropdown and select the gpt-4o instance hosted in Microsoft Foundry, that has been pre-deployed for this workshop, in the project you logged into in the [previous lab section](./01_Get_Started.md).
 
 ![Select Azure Model](../../img/select_azure_model.png)
 

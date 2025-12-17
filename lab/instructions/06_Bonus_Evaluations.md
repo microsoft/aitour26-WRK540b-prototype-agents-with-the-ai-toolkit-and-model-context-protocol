@@ -30,10 +30,9 @@ Your personality is:​
 ```
 
 > [!NOTE]
-> Make sure the Model is still set to **gpt-5-mini (via Azure AI Foundry)**.
+> Make sure the Model is still set to **gpt-4o (via Microsoft Foundry)**.
 
-
-All variables are stored in the **Variables** section in Agent Builder.
+All variables are stored in the **Variables** section in Agent Builder. ignore the error message you see in the screenshot below, as we are going to pass values for the variable through the Evaluation tab.
 
 ![Agent variables.](../../img/agent-variables.png)
 
@@ -57,7 +56,6 @@ You have a couple of options from here with respect to how you'd like to add dat
 
 > [!TIP]
 > To expand the **Evaluation** section, click the **Expand to Full Screen** icon next to the Trash Can icon.
->
 
 **Manually Add Data**
 

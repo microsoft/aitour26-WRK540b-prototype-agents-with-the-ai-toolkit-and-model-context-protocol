@@ -39,10 +39,10 @@ Note that this message includes:
 
 ## Step 2: Testing the System Message with Multimodal Input
 
-Now that we configured the system prompt, let's test the system with a multimodal user prompt. Attach the circuit breaker image available at the following path:
+Now that we configured the system prompt, let's test the system with a multimodal user prompt. In the playground chat, click the image attachment icon to upload an image in the conversation context. Then select the circuit breaker image available at the following path:
 
-```
-/workspace/src/instructions/circuit_breaker.png
+```    
+C:\Users\LabUser\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\src\instructions\circuit_breaker.png
 ```
 Combine it with the following user prompt:
 
@@ -50,7 +50,7 @@ Combine it with the following user prompt:
 Here’s a photo from the store floor. What is this component, and what details should I capture (e.g., amperage, pole type) before searching our catalog and checking stock?
 ```
 
-The model will analyze the image and provides a suggestion, adding some reasoning to back up its recommendation. Read through the response and see if it aligns with the expectations set in the system message.
+The model will analyze the image and provides an explanation along with some suggested details to capture, to search the catalog and check stock. Read through the response and see if it aligns with the expectations set in the system message.
 
 Let's now test the model with a user query which is not relevant to Zava's business. Enter the following prompt:
 
@@ -68,16 +68,16 @@ For our use case, we are going to provide the model with some context about Zava
 
 To add grounding data, we will use the **file attachment** feature in the Playground. This allows us to upload documents that the model can reference when generating responses.
 
-The document we are going to upload is a JSON file containing a subset of Zava's product catalog. In the workspace directory, browse to the `/workspace/data/` folder and locate the file named `zava_product_catalog.json`. [Open it](../../data/zava_products_catalog.json) in the code editor to take a look at its content.
+The document we are going to upload is a JSON file containing a subset of Zava's product catalog. If you want to have a look at its content, browse to the `/data/` folder and locate the file named `zava_product_catalog.json`. Open it in the code editor.
 
 1. Click the file attachment icon in the prompt input area.
 ![File attachment icon](../../img/file_attachment_icon.png)
-2. Select the file `zava_product_catalog.json` from the `/workspace/data/` directory.
+2. Select the file `zava_product_catalog.json` from the `/data/` directory.
 
 > [!TIP]
-> In the text field that appears, you can enter the following path to the file:
+> In the window that opens, you can find the data directory at the following path:
 > ```
->/workspace/data/zava_product_catalog.json
+>C:\Users\LabUser\aitour26-WRK542-prototype-agents-with-the-ai-toolkit-and-model-context-protocol\data
 > ```
 
 ![Uploading Grounding Data File](../../img/uploading_grounding_data_file.png)
@@ -89,11 +89,10 @@ From the attached Zava product catalog, suggest a circuit breaker option that wo
 ```
 
 The model will analyze the uploaded product catalog and provide a grounded suggestion that matches the circuit breaker request.
-The model will analyze the uploaded product catalog and provide a grounded suggestion for a circuit breaker-related request.
 
-What happens behind the scenes is that the attached data are automatically included in the prompt context, enabling the model to generate more informed and relevant responses.
+What happens behind the scenes is that the attached data is automatically included in the prompt context, enabling the model to generate more informed and relevant responses.
 
-Of course this approach has its limitations, as the model can only process a limited amount of text in the prompt context, and the larger is the attached context the higher is the response latency and cost. For larger datasets or more complex scenarios, you need to implement a more sophisticated retrieval mechanism to ensure the model prompt includes only the most relevant information for the current user query. We are going to explore this in more detail in the next section of this workshop.
+Of course this approach has its limitations, as the model can only process a limited amount of text in the prompt context, and the larger is the attached context the higher is the response latency and cost. For larger datasets or more complex scenarios, you need to implement a more sophisticated retrieval mechanism to ensure the model prompt includes only the most relevant information for the current user query. We are going to explore this in more details in the next section of this workshop.
 
 ## Key Takeaways
 - Crafting an effective system message is crucial for guiding the model's behavior and ensuring relevant responses.

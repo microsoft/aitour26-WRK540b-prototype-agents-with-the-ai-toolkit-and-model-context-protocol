@@ -30,8 +30,8 @@ Copy and paste the following command block to the terminal and press **Enter**. 
 ; code .
 ```
 
-> [!WARNING]
-> You'll get a warning about pasting multiple lines in the terminal. Click on **Allow** to proceed.
+> [!NOTE]
+> You'll get a warning about pasting multiple lines in the terminal. Click on **Paste anyway** to proceed.
 
 ## Login to GitHub
 

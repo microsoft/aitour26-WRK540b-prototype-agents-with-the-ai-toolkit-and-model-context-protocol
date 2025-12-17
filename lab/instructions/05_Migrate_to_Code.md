@@ -23,7 +23,7 @@ To access GitHub Copilot Chat, select the **Toggle Chat** icon at the top of the
 > [!NOTE]
 > If asked to log in at your first interaction with Copilot, select **Sign-in** -> **Continue with GitHub**. Then click on **Continue** to proceed with the GitHub Enterprise account you used to access the GitHub hosted models, when redirected to the GitHub sign-in page.
 
-Save the generated code file to your workspace as 'src/python/cora-app.py'. Be sure to have the file active so that GitHub Copilot Chat can use the file as context. Alternatively, you could reference the specific file itself in your prompt to GitHub Copilot Chat.
+Save the generated code file to your workspace as 'src/cora-app.py'. Be sure to have the file active so that GitHub Copilot Chat can use the file as context. Alternatively, you could reference the specific file itself in your prompt to GitHub Copilot Chat.
 
 ![GitHub Copilot Chat in Ask mode.](../../img/ghcp-ask-mode.png)
 
@@ -49,20 +49,42 @@ For example, if you selected the **Microsoft Agent Framework** SDK with **Python
 1. Locate the section in the code file that configures MCP server tools. It should look similar to this:
 
    ```python
-    command="INSERT_COMMAND_HERE",
-            args=[
-                "INSERT_ARGUMENTS_HERE",
-            ]
+   MCPStdioTool(
+       name="VSCode Tools".replace("-", "_"),
+       description="MCP server for VSCode Tools",
+       command="INSERT_COMMAND_HERE",
+       args=[
+           "INSERT_ARGUMENTS_HERE",
+       ]
+   ),
    ```
-2. Replace the placeholders to point to the two MCP servers used in this workshop (Sales Analysis and Inventory). Depending on the SDK you selected, this may be configured as an HTTP MCP server URL rather than a local stdio process.
+
+2. Replace the placeholders to point to the two MCP servers used in this workshop (Sales Analysis and Inventory).
 
 For this workshop, the servers run locally at:
 
 - `http://localhost:8004/mcp/` (Sales Analysis MCP server)
 - `http://localhost:8005/mcp/` (Inventory MCP server)
 
-   If the generated code expects a local process command/args, you can instead run the servers separately (see the VS Code tasks) and configure the client for HTTP.
-4. Open a terminal in Visual Studio Code by selecting **Terminal** -> **New Terminal** from the top menu.
+The resulting configuration should look like this:
+
+```python
+MCPStreamableHTTPTool(
+    name="sales_analysis",
+    description="MCP server for Sales Analysis",
+    url="http://localhost:8004/mcp/"
+),
+MCPStreamableHTTPTool(
+    name="inventory_management",
+    description="MCP server for Inventory Management",
+    url="http://localhost:8005/mcp/"
+)
+```
+
+> [!NOTE]
+> Depending on the SDK you selected, this may be configured as an HTTP MCP server URL rather than a local stdio process.
+
+4. Open a new terminal in Visual Studio Code by selecting **Terminal** -> **New Terminal** from the top menu.
 5. Install the required dependencies by using:
 
 ```
@@ -79,13 +101,16 @@ You'll be prompted to open a browser window and fill in a code to complete the a
 7. Navigate to the directory where the code file is saved:
 
 ```
-cd src/python
+cd src
 ```
 8. Run the script using:
 
 ```
 python cora-app.py
 ```
+
+> [!NOTE]
+> Make sure the MCP servers are running before executing the script. If you followed the previous sections of the lab, the MCP servers should already be running locally on your machine.
 
 Consider using GitHub Copilot Chat in Agent mode to assist with creating files for the Cora agent's UI. You could also ask GitHub Copilot Chat in Agent mode to integrate the agent script into the app UI so that you'll have a working prototype of the agent!
 
