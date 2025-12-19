@@ -13,6 +13,20 @@ As a first step, login into the lab Virtual Machine using the credentials you ca
 > First time using **Skillable?** The "T" icon (e.g., +++Admin+++) indicates values that are automatically input for you at the current cursor location in VM, with one click. This reduces your effort and minimizes input errors.
 > Also, you can always click on the images to enlarge them, if needed.
 
+## Login to GitHub
+
+For this workshop, you'll be using a GitHub Enterprise (GHE) account to access GitHub-hosted models in the AI Toolkit Model Catalog and GitHub Copilot features in Visual Studio Code.
+
+Follow the instructions below to sign-in with a given GitHub Enterprise (GHE) account and create a GitHub Codespace for this lab.
+
+1. Open the edge browser from the taskbar. You'll get a browser tab with the [GHE sign-in page](https://github.com/enterprises/skillable-events) already opened for you.
+
+2. Sign-in with the following credentials:
+   -  Username: +++@lab.CloudPortalCredential(User1).Username+++
+   -  TAP: +++@lab.CloudPortalCredential(User1).TAP+++
+
+Once you get notified that you are successfully logged in, you can hide the browser tab and move forward with opening the workshop environment in Visual Studio Code.
+
 ## Open the Workshop Environment in Visual Studio Code
 
 Follow these steps to open the workshop environment in Visual Studio Code.
@@ -32,20 +46,6 @@ Copy and paste the following command block to the terminal and press **Enter**. 
 
 > [!NOTE]
 > You'll get a warning about pasting multiple lines in the terminal. Click on **Paste anyway** to proceed.
-
-## Login to GitHub
-
-For this workshop, you'll be using a GitHub Enterprise (GHE) account to access GitHub-hosted models in the AI Toolkit Model Catalog and GitHub Copilot features in Visual Studio Code.
-
-Follow the instructions below to sign-in with a given GitHub Enterprise (GHE) account and create a GitHub Codespace for this lab.
-
-1. Open the edge browser from the taskbar. You'll get a browser tab with the [GHE sign-in page](https://github.com/enterprises/skillable-events) already opened for you.
-
-2. Sign-in with the following credentials:
-   -  Username: +++@lab.CloudPortalCredential(User1).Username+++
-   -  TAP: +++@lab.CloudPortalCredential(User1).TAP+++
-
-Once you get notified that you are successfully logged in, you can hide the browser tab and move back to your VS Code instance.
 
 ## Authenticate to Azure
 
