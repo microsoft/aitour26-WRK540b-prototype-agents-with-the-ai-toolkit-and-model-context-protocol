@@ -88,7 +88,7 @@ MCPStreamableHTTPTool(
 5. Install the required dependencies by using:
 
 ```
-pip install agent-framework --pre
+pip install --no-deps agent-framework==1.0.0b260107  agent-framework-core==1.0.0b260107 agent-framework-azure-ai==1.0.0b260107
 ```
 6. Authenticate to Azure:
 

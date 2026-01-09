@@ -123,6 +123,14 @@ Double check that you get the message `Uvicorn is running on port XXXX` in both 
 
 ![MCP Servers running](../../img/mcp_servers_running.png)
 
+> [!TIP]
+> Alternatevely, you can also start the MCP servers through the UI, by navigating to the 'Run and Debug' tab in Visual Studio Code and then clicking the green play button on the top.
+> ![Run and debug](../../img/run-and-debug.png)
+
+Next, navigate to the mcp servers configuration file, located at ./.vscode/mcp.json and click on the *Start* button above each Zava MCP server name.
+
+![MCP start buttons](../../img/mcp_json_start_buttons.png)
+
 ## Step 5: Add the MCP Server Sales Tools to the Agent
 
 For this lab, we’ll give the agent a small, focused set of tools from both servers (enough to search products, check stock, run sales queries, and perform a transfer with confirmation).
